@@ -1,35 +1,50 @@
-  import {
-    Show,
-    SignInButton,
-    SignUpButton,
-    UserButton
-  } from '@clerk/react';
+import { Link, NavLink } from "react-router";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
 
-  function Navbar() {
-    return (
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-gray-900">
-            Kolleksiya App
-          </h1>
+function Navbar() {
+  const linkClass = ({ isActive }) =>
+    isActive
+      ? "text-asosiy font-semibold"
+      : "text-matn hover:text-asosiy transition";
 
-          <div className="flex items-center gap-3">
-            <Show when="signed-out">
-              <SignInButton mode="modal">
-                <button className="btn btn-ghost btn-sm">Kirish</button>
-              </SignInButton>
-              <SignUpButton mode="modal">
-                <button className="btn btn-primary btn-sm">Ro'yxatdan o'tish</button>
-              </SignUpButton>
-            </Show>
+  return (
+    <header className="bg-fon border-b border-ikkilamchi/20 sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <Link to="/" className="font-heading text-4xl text-matn">
+          Davlatlar
+        </Link>
 
-            <Show when="signed-in">
-              <UserButton afterSignOutUrl="/" />
-            </Show>
-          </div>
-        </div>
-      </header>
-    );
-  }
+        <nav className="flex items-center gap-6">
+          <Show when="signed-in">
+            <NavLink to="/dashboard" className={linkClass}>
+              Dashboard
+            </NavLink>
+            <NavLink to="/profile" className={linkClass}>
+              Profile
+            </NavLink>
+          </Show>
 
-  export default Navbar;
+          <Show when="signed-out">
+            <SignInButton mode="modal">
+              <button className="text-matn hover:text-asosiy font-medium transition">
+                Kirish
+              </button>
+            </SignInButton>
+
+            <SignUpButton mode="modal">
+              <button className="bg-archazor text-ohaktosh px-4 py-2 rounded-lg hover:opacity-90 transition font-medium">
+                Ro'yxatdan o'tish
+              </button>
+            </SignUpButton>
+          </Show>
+
+          <Show when="signed-in">
+            <UserButton afterSignOutUrl="/" />
+          </Show>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+export default Navbar;

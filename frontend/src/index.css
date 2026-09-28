@@ -1,1 +1,38 @@
 @import "tailwindcss";
+
+@theme {
+  /* Yaponiya */
+  --color-yaponiya-tun: #0f2a3e;
+  --color-yaponiya-quyosh: #b0453d;
+
+  /* Rossiya */
+  --color-rossiya-chuqur: #22344f;
+  --color-rossiya-qor: #8c9ca6;
+
+  /* O'zbekiston */
+  --color-ozbekiston-feruza: #1f6e63;
+  --color-ozbekiston-sopol: #c8853a;
+
+  /* Fransiya */
+  --color-fransiya-havo-rang: #3a6ea5;
+  --color-fransiya-botish: #d98a3d;
+
+  /* Germaniya */
+  --color-germaniya-qora: #141414;
+  --color-germaniya-oltin: #ffce00;
+
+  /* Angliya */
+  --color-angliya-toq-koq: #012169;
+  --color-angliya-qizil: #c8102e;
+
+  /* Italiya */
+  --color-italiya-yashil: #008c45;
+  --color-italiya-qizil: #ce2b37;
+
+  /* Turkiya */
+  --color-turkiya-qizil: #e30a17;
+  --color-turkiya-oq: #ffffff;
+
+  --font-heading: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+}
