@@ -18,7 +18,7 @@ model Davlat {
   title       String
   location    String
   size        Float
-  flag        String
+  flag        String?
   description String?
   imageUrl    String?
   userId      String
