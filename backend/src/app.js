@@ -1,40 +1,48 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+const { clerkMiddleware, getAuth } = require("@clerk/express");
 
 const app = express();
 
-app.use(morgan('dev'));
-app.use(cors());
+app.use(morgan("dev"));
+app.use(
+  cors({
+    origin: "http://localhost:/5173",
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/health', (req, res) => {
+app.use(clerkMiddleware());
+
+app.get("/whoami", (req, res) => {
+  const { userId, sessionId, sessionClaims } = getAuth(req);
   res.json({
     success: true,
     data: {
-      status: 'ok',
-      message: 'Backend ishladi!!!',
-      timestamp: new Date().toISOString()
-    }
+      userId,
+      sessionId,
+      hasClaims: !!sessionClaims,
+      authOnReq: req.auth ?? null,
+    },
   });
 });
 
-app.get('/', (req, res) => {
+const davlatRoutes = require(""); //davlat.routes
+
+app.get("/health", (req, res) => {
   res.json({
     success: true,
-    data: {
-      name: 'Kolleksiya API',
-      version: '1.0.0',
-      endpoints: ['GET /health']
-    }
+    data: { status: "ok", timestamp: new Date().toISOString() },
   });
 });
 
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    error: 'Endpoint topilmadi'
+    error: "Endpoint topilmadi",
   });
 });
 
