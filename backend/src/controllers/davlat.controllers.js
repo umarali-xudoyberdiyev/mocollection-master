@@ -38,15 +38,15 @@ const getById_Davlat = async (req, res, next) => {
 const create_Davlat = async (req, res, next) => {
   try {
     const { title, description, imageUrl, size, flag, location } = req.body;
-
+    console.log(req.userId);
     const item = await prisma.davlat.create({
       data: {
         title,
+        location,
+        size,
         description,
         imageUrl: imageUrl || null,
-        size,
         flag,
-        location,
         userId: req.userId,
       },
     });
