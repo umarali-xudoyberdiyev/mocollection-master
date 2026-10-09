@@ -18,9 +18,9 @@ model Davlat {
   title       String
   location    String
   size        Float
-  flag        String?
   description String?
   imageUrl    String?
+  maslahatBeraman Boolean
   userId      String
   createdAt   DateTime  @default(now())
 }
