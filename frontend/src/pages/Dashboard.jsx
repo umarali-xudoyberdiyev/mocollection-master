@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import {
   getDavlat,
@@ -25,6 +25,7 @@ function Dashboard() {
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [sortBy, setSortBy] = useState("default");
 
   const loadDavlatlar = async () => {
     setLoading(true);
@@ -42,6 +43,19 @@ function Dashboard() {
   useEffect(() => {
     loadDavlatlar();
   }, []);
+
+  const sortedDavlatlar = useMemo(() => {
+    const list = [...davlatlar];
+    if (sortBy === "alphabet") {
+      return list.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+    }
+    if (sortBy === "size") {
+      return list.sort(
+        (a, b) => (parseFloat(b.size) || 0) - (parseFloat(a.size) || 0),
+      );
+    }
+    return list;
+  }, [davlatlar, sortBy]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -115,7 +129,7 @@ function Dashboard() {
     try {
       await deleteDavlat(id);
       setDavlatlar((prev) => prev.filter((m) => m.id !== id));
-      toast.success("Davlat chirildi");
+      toast.success("Davlat o'chirildi");
     } catch (err) {
       toast.error(err.message);
     }
@@ -134,7 +148,7 @@ function Dashboard() {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-2xl border border-slate-200/80 p-8 mb-10 shadow-lg shadow-slate-200/60 space-y-6"
+        className="bg-white rounded-2xl border border-slate-200/80 p-8 mb-6 shadow-lg shadow-slate-200/60 space-y-6"
       >
         <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
           <div className="w-3.5 h-3.5 rounded-full bg-[#1F6E63]"></div>
@@ -177,7 +191,7 @@ function Dashboard() {
             name="size"
             value={form.size}
             onChange={handleChange}
-            placeholder="Poytaxt va Aholi (masalan: Poytaxt: Tokio • Aholi: 125 mln)"
+            placeholder="Maydoni yoki Aholi (sonlarda)"
             className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-[#F5F4EE]/50 text-[#22344F] font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F6E63]/30 focus:border-[#1F6E63] transition-all text-sm"
           />
           <input
@@ -228,6 +242,29 @@ function Dashboard() {
         </div>
       </form>
 
+      <div className="flex justify-end items-center mb-6">
+        <div className="flex items-center gap-2.5 bg-white px-5 py-2.5 rounded-full border border-slate-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1.5">
+            Saralash:
+          </span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="bg-transparent text-sm font-extrabold text-[#22344F] focus:outline-none cursor-pointer appearance-none pr-7 py-1"
+          >
+            <option value="default" className="text-[#22344F]">
+              Odatiy
+            </option>
+            <option value="alphabet" className="text-[#22344F]">
+              Alifbo bo'yicha (A-Z)
+            </option>
+            <option value="size" className="text-[#22344F]">
+              Maydoni katta bo'yicha
+            </option>
+          </select>
+        </div>
+      </div>
+
       {loading && (
         <div className="text-center py-12">
           <p className="text-[#1F6E63] font-bold animate-pulse text-lg">
@@ -256,7 +293,7 @@ function Dashboard() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {davlatlar.map((davlat) => (
+        {sortedDavlatlar.map((davlat) => (
           <DavlatCard
             key={davlat.id}
             davlat={davlat}
