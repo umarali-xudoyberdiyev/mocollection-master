@@ -20,7 +20,7 @@ model Davlat {
   size        Float
   description String?
   imageUrl    String?
-  maslahatBeraman Boolean
+  maslahatBeraman Boolean @default(true)
   userId      String
   createdAt   DateTime  @default(now())
 }

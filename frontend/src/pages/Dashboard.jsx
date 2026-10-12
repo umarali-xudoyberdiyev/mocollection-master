@@ -13,6 +13,8 @@ const EMPTY_FORM = {
   title: "",
   description: "",
   imageUrl: "",
+  location: "",
+  size: 1.0,
   maslahatBeraman: true,
 };
 
@@ -52,8 +54,8 @@ function Dashboard() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.title.trim() || !form.davlat.trim()) {
-      toast.warning("Sarlavha va davlat to'ldirilishi shart");
+    if (!form.title.trim()) {
+      toast.warning("Sarlavha to'ldirilishi shart");
       return;
     }
 
@@ -61,11 +63,14 @@ function Dashboard() {
     try {
       const payload = {
         title: form.title.trim(),
-        description: form.description.trim() || undefined,
-        imageUrl: form.imageUrl.trim() || undefined,
-        davlat: form.davlat.trim(),
-        maslahatBeraman: form.maslahatBeraman,
+        location: form.location.trim(),
+        description: form.description.trim() || "",
+        size: form.size || 0.0,
+        imageUrl: form.imageUrl.trim() || "",
+        maslahatBeraman: form.maslahatBeraman || true,
       };
+
+      console.log("payload", payload);
 
       if (editingId) {
         const updated = await updateDavlat(editingId, payload);
@@ -92,7 +97,9 @@ function Dashboard() {
     setEditingId(davlat.id);
     setForm({
       title: davlat.title || "",
+      location: davlat.location || "",
       description: davlat.description || "",
+      size: davlat.size || 0.0,
       imageUrl: davlat.imageUrl || "",
       maslahatBeraman: davlat.maslahatBeraman ?? true,
     });
@@ -117,25 +124,35 @@ function Dashboard() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Tog'larim</h1>
+    <div className="max-w-5xl mx-auto px-4 py-8 font-sans">
+      <h1 className="text-4xl font-extrabold text-slate-800 mb-8 tracking-tight flex items-center gap-2">
+        Tog'larim
+      </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-2xl shadow-sm border p-6 mb-8 space-y-4"
+        className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-8 mb-10 space-y-6 backdrop-blur-sm transition-all"
       >
-        <h2 className="text-lg font-semibold">
+        <h2 className="text-xl font-bold text-slate-800 border-b border-slate-100 pb-3">
           {editingId ? "Tog'ni tahrirlash" : "Yangi tog' qo'shish"}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <input
             type="text"
             name="title"
             value={form.title}
             onChange={handleChange}
-            placeholder="Nomi *"
-            className="border rounded-lg px-4 py-2 w-full"
+            placeholder="Nomi"
+            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
+          />
+          <input
+            type="text"
+            name="location"
+            value={form.location}
+            onChange={handleChange}
+            placeholder="Yevropa"
+            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
           />
         </div>
 
@@ -145,36 +162,50 @@ function Dashboard() {
           onChange={handleChange}
           placeholder="Tavsif"
           rows="2"
-          className="border rounded-lg px-4 py-2 w-full resize-none"
+          className="border border-slate-200 rounded-xl px-4 py-3 w-full resize-none bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <input
+            type="text"
+            name="size"
+            value={form.size}
+            onChange={handleChange}
+            placeholder="449.700.000km"
+            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
+          />
           <input
             type="text"
             name="imageUrl"
             value={form.imageUrl}
             onChange={handleChange}
             placeholder="Rasm URL"
-            className="border rounded-lg px-4 py-2 w-full"
+            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
           />
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 py-1">
           <input
             type="checkbox"
+            id="maslahatBeraman"
             name="maslahatBeraman"
             checked={form.maslahatBeraman}
             onChange={handleChange}
-            className="w-4 h-4"
+            className="w-5 h-5 rounded-md text-emerald-600 focus:ring-emerald-500/30 border-slate-300 cursor-pointer transition-all"
           />
-          <label className="text-sm">Maslahat beraman</label>
+          <label
+            htmlFor="maslahatBeraman"
+            className="text-sm font-medium text-slate-700 cursor-pointer select-none"
+          >
+            Maslahat beraman
+          </label>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3 pt-2">
           <button
             type="submit"
             disabled={saving}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            className="bg-emerald-600 text-white font-medium px-7 py-3 rounded-xl hover:bg-emerald-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-600/20 transition-all duration-200"
           >
             {saving ? "Saqlanmoqda..." : editingId ? "Saqlash" : "Qo'shish"}
           </button>
@@ -183,7 +214,7 @@ function Dashboard() {
             <button
               type="button"
               onClick={handleCancel}
-              className="border px-6 py-2 rounded-lg"
+              className="border border-slate-200 text-slate-600 font-medium px-7 py-3 rounded-xl hover:bg-slate-100 hover:text-slate-800 active:scale-95 transition-all duration-200"
             >
               Bekor qilish
             </button>
@@ -191,28 +222,34 @@ function Dashboard() {
         </div>
       </form>
 
-      {loading && <p className="text-center py-8">Yuklanmoqda...</p>}
+      {loading && (
+        <div className="text-center py-12">
+          <p className="text-slate-500 font-medium animate-pulse">
+            Yuklanmoqda...
+          </p>
+        </div>
+      )}
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-4 mb-4">
+        <div className="bg-red-50/80 backdrop-blur-sm border border-red-200 text-red-700 rounded-2xl p-4 mb-6 shadow-sm">
           {error}
         </div>
       )}
 
       {!loading && !error && davlatlar.length === 0 && (
-        <div class="flex flex-col items-center border-1 rounded-xl">
+        <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-3xl p-10 bg-slate-50/50 text-center">
           <img
             src={HeroImage}
             alt="Travel and tour illustration"
-            class="w-1/2 md:w-1/3 lg:w-1/4 h-auto object-contain mx-auto py-5"
+            className="w-1/2 md:w-1/3 lg:w-1/4 h-auto object-contain mx-auto mb-4 opacity-90 drop-shadow-md"
           />
-          <p class="mt-4 text-center text-gray-700">
+          <p className="text-slate-600 font-medium text-lg">
             Hozircha tog'lar yo'q. Birinchisini qo'shing!
           </p>
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {davlatlar.map((davlat) => (
           <DavlatCard
             key={davlat.id}

@@ -4,9 +4,9 @@ CREATE TABLE "Davlat" (
     "title" TEXT NOT NULL,
     "location" TEXT NOT NULL,
     "size" DOUBLE PRECISION NOT NULL,
-    "flag" TEXT NOT NULL,
     "description" TEXT,
     "imageUrl" TEXT,
+    "maslahatBeraman" BOOLEAN NOT NULL DEFAULT true,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

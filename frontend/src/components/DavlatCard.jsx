@@ -18,6 +18,11 @@ function DavlatCard({ davlat, onEdit, onDelete }) {
             <h3 className="text-lg font-semibold">{davlat.title}</h3>
           </div>
         </div>
+        {davlat.location && (
+          <p className="text-sm text-gray-700 line-clamp-2">
+            {davlat.location}
+          </p>
+        )}
 
         {davlat.description && (
           <p className="text-sm text-gray-700 line-clamp-2">
