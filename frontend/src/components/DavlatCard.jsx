@@ -2,7 +2,6 @@ function DavlatCard({ davlat, onEdit, onDelete }) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 shadow-md shadow-slate-200/50 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
       <div>
-        {/* Rasm qismi */}
         {davlat.imageUrl && (
           <div className="relative w-full h-48 bg-slate-100 overflow-hidden">
             <img
@@ -16,37 +15,31 @@ function DavlatCard({ davlat, onEdit, onDelete }) {
           </div>
         )}
 
-        {/* Kartochka mazmuni */}
         <div className="p-5 space-y-3">
-          {/* Mintaqa (Sarlavha tepasidagi kichik matn) */}
           {davlat.location && (
             <span className="text-[11px] font-bold tracking-wider text-[#1F6E63] uppercase block">
               {davlat.location}
             </span>
           )}
 
-          {/* Davlat nomi */}
           <h3 className="text-2xl font-extrabold text-[#22344F] leading-tight">
             {davlat.title}
           </h3>
 
-          {/* Tavsif */}
           {davlat.description && (
             <p className="text-sm text-slate-600 leading-relaxed line-clamp-3 font-normal">
               {davlat.description}
             </p>
           )}
 
-          {/* Poytaxt va Aholi (Size maydoni) */}
           {davlat.size && (
             <div className="pt-2 text-xs font-semibold text-slate-500 border-t border-slate-100">
-              {davlat.size}
+              {davlat.size} KM
             </div>
           )}
         </div>
       </div>
 
-      {/* Amallar tugmalari */}
       <div className="p-5 pt-0">
         <div className="flex gap-2 pt-3 border-t border-slate-100">
           <button

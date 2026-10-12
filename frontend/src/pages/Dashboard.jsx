@@ -63,25 +63,23 @@ function Dashboard() {
     try {
       const payload = {
         title: form.title.trim(),
-        location: form.location.trim(),
+        location: form.location.trim() || "",
         description: form.description.trim() || "",
-        size: form.size || 0.0,
+        size: parseFloat(form.size) || 0.0,
         imageUrl: form.imageUrl.trim() || "",
         maslahatBeraman: form.maslahatBeraman || true,
       };
-
-      console.log("payload", payload);
 
       if (editingId) {
         const updated = await updateDavlat(editingId, payload);
         setDavlatlar((prev) =>
           prev.map((m) => (m.id === editingId ? updated : m)),
         );
-        toast.success("Tog' yangilandi");
+        toast.success("Davlat yangilandi");
       } else {
         const created = await createDavlat(payload);
         setDavlatlar((prev) => [created, ...prev]);
-        toast.success("Tog' qo'shildi");
+        toast.success("Davlat qo'shildi");
       }
 
       setForm(EMPTY_FORM);
@@ -99,7 +97,7 @@ function Dashboard() {
       title: davlat.title || "",
       location: davlat.location || "",
       description: davlat.description || "",
-      size: davlat.size || 0.0,
+      size: parseFloat(davlat.size) || 0.0,
       imageUrl: davlat.imageUrl || "",
       maslahatBeraman: davlat.maslahatBeraman ?? true,
     });
@@ -112,12 +110,12 @@ function Dashboard() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Bu tog'ni o'chirishni tasdiqlaysizmi?")) return;
+    if (!window.confirm("Bu davlatni o'chirishni tasdiqlaysizmi?")) return;
 
     try {
       await deleteDavlat(id);
       setDavlatlar((prev) => prev.filter((m) => m.id !== id));
-      toast.success("Tog' o'chirildi");
+      toast.success("Davlat chirildi");
     } catch (err) {
       toast.error(err.message);
     }
@@ -125,7 +123,6 @@ function Dashboard() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10 font-sans bg-[#F5F4EE] min-h-screen text-[#22344F]">
-      {/* Sarlavha qismi - O'zbekiston va Rossiya to'q ranglari uslubida */}
       <div className="border-b-2 border-[#1F6E63] pb-5 mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-extrabold tracking-tight text-[#22344F] flex items-center gap-3">
           <span className="bg-[#1F6E63] text-white px-3 py-1 rounded-xl text-2xl shadow-sm">
@@ -135,7 +132,6 @@ function Dashboard() {
         </h1>
       </div>
 
-      {/* Forma qismi - Oq fon va aniq to'q rangli matnlar */}
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-2xl border border-slate-200/80 p-8 mb-10 shadow-lg shadow-slate-200/60 space-y-6"

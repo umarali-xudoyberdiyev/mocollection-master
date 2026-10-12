@@ -9,7 +9,6 @@ const createDavlatSchema = z.object({
     .union([z.string().url("Rasm URL noto'g'ri formatda"), z.literal("")])
     .optional(),
   size: z.float32(),
-  flag: z.string().optional(),
   location: z.string(),
 });
 
