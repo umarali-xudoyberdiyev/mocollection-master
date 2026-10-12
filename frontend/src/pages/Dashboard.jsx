@@ -124,18 +124,28 @@ function Dashboard() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 font-sans">
-      <h1 className="text-4xl font-extrabold text-slate-800 mb-8 tracking-tight flex items-center gap-2">
-        Tog'larim
-      </h1>
+    <div className="max-w-6xl mx-auto px-6 py-10 font-sans bg-[#F5F4EE] min-h-screen text-[#22344F]">
+      {/* Sarlavha qismi - O'zbekiston va Rossiya to'q ranglari uslubida */}
+      <div className="border-b-2 border-[#1F6E63] pb-5 mb-8 flex items-center justify-between">
+        <h1 className="text-4xl font-extrabold tracking-tight text-[#22344F] flex items-center gap-3">
+          <span className="bg-[#1F6E63] text-white px-3 py-1 rounded-xl text-2xl shadow-sm">
+            🌍
+          </span>
+          Davlatlar
+        </h1>
+      </div>
 
+      {/* Forma qismi - Oq fon va aniq to'q rangli matnlar */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-8 mb-10 space-y-6 backdrop-blur-sm transition-all"
+        className="bg-white rounded-2xl border border-slate-200/80 p-8 mb-10 shadow-lg shadow-slate-200/60 space-y-6"
       >
-        <h2 className="text-xl font-bold text-slate-800 border-b border-slate-100 pb-3">
-          {editingId ? "Tog'ni tahrirlash" : "Yangi tog' qo'shish"}
-        </h2>
+        <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+          <div className="w-3.5 h-3.5 rounded-full bg-[#1F6E63]"></div>
+          <h2 className="text-xl font-bold text-[#22344F]">
+            {editingId ? "Davlatni tahrirlash" : "Yangi davlat qo'shish"}
+          </h2>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <input
@@ -143,16 +153,16 @@ function Dashboard() {
             name="title"
             value={form.title}
             onChange={handleChange}
-            placeholder="Nomi"
-            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
+            placeholder="Davlat nomi (masalan: Yaponiya)"
+            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-[#F5F4EE]/50 text-[#22344F] font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F6E63]/30 focus:border-[#1F6E63] transition-all text-sm"
           />
           <input
             type="text"
             name="location"
             value={form.location}
             onChange={handleChange}
-            placeholder="Yevropa"
-            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
+            placeholder="Mintaqa (masalan: SHARQIY OSIYO)"
+            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-[#F5F4EE]/50 text-[#22344F] font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F6E63]/30 focus:border-[#1F6E63] transition-all text-sm uppercase tracking-wider"
           />
         </div>
 
@@ -161,8 +171,8 @@ function Dashboard() {
           value={form.description}
           onChange={handleChange}
           placeholder="Tavsif"
-          rows="2"
-          className="border border-slate-200 rounded-xl px-4 py-3 w-full resize-none bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
+          rows="3"
+          className="border border-slate-200 rounded-xl px-4 py-3 w-full resize-none bg-[#F5F4EE]/50 text-[#22344F] font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F6E63]/30 focus:border-[#1F6E63] transition-all text-sm"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -171,8 +181,8 @@ function Dashboard() {
             name="size"
             value={form.size}
             onChange={handleChange}
-            placeholder="449.700.000km"
-            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
+            placeholder="Poytaxt va Aholi (masalan: Poytaxt: Tokio • Aholi: 125 mln)"
+            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-[#F5F4EE]/50 text-[#22344F] font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F6E63]/30 focus:border-[#1F6E63] transition-all text-sm"
           />
           <input
             type="text"
@@ -180,7 +190,7 @@ function Dashboard() {
             value={form.imageUrl}
             onChange={handleChange}
             placeholder="Rasm URL"
-            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200"
+            className="border border-slate-200 rounded-xl px-4 py-3 w-full bg-[#F5F4EE]/50 text-[#22344F] font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F6E63]/30 focus:border-[#1F6E63] transition-all text-sm"
           />
         </div>
 
@@ -191,21 +201,21 @@ function Dashboard() {
             name="maslahatBeraman"
             checked={form.maslahatBeraman}
             onChange={handleChange}
-            className="w-5 h-5 rounded-md text-emerald-600 focus:ring-emerald-500/30 border-slate-300 cursor-pointer transition-all"
+            className="w-5 h-5 rounded-md text-[#1F6E63] focus:ring-[#1F6E63] border-slate-300 cursor-pointer accent-[#1F6E63]"
           />
           <label
             htmlFor="maslahatBeraman"
-            className="text-sm font-medium text-slate-700 cursor-pointer select-none"
+            className="text-sm font-semibold text-[#22344F] cursor-pointer select-none"
           >
-            Maslahat beraman
+            Tavsiya etish
           </label>
         </div>
 
-        <div className="flex items-center gap-3 pt-2">
+        <div className="flex items-center gap-4 pt-2">
           <button
             type="submit"
             disabled={saving}
-            className="bg-emerald-600 text-white font-medium px-7 py-3 rounded-xl hover:bg-emerald-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-600/20 transition-all duration-200"
+            className="bg-[#1F6E63] hover:bg-[#18574e] text-white font-bold px-8 py-3.5 rounded-xl active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-[#1F6E63]/30 transition-all text-xs uppercase tracking-wider"
           >
             {saving ? "Saqlanmoqda..." : editingId ? "Saqlash" : "Qo'shish"}
           </button>
@@ -214,7 +224,7 @@ function Dashboard() {
             <button
               type="button"
               onClick={handleCancel}
-              className="border border-slate-200 text-slate-600 font-medium px-7 py-3 rounded-xl hover:bg-slate-100 hover:text-slate-800 active:scale-95 transition-all duration-200"
+              className="border-2 border-slate-200 text-[#22344F] font-bold px-8 py-3.5 rounded-xl hover:bg-slate-100 active:scale-[0.98] transition-all text-xs uppercase tracking-wider"
             >
               Bekor qilish
             </button>
@@ -224,32 +234,32 @@ function Dashboard() {
 
       {loading && (
         <div className="text-center py-12">
-          <p className="text-slate-500 font-medium animate-pulse">
+          <p className="text-[#1F6E63] font-bold animate-pulse text-lg">
             Yuklanmoqda...
           </p>
         </div>
       )}
 
       {error && (
-        <div className="bg-red-50/80 backdrop-blur-sm border border-red-200 text-red-700 rounded-2xl p-4 mb-6 shadow-sm">
+        <div className="bg-[#E30A17]/10 border-l-4 border-[#E30A17] text-[#E30A17] font-semibold rounded-r-xl p-4 mb-6 text-sm shadow-sm">
           {error}
         </div>
       )}
 
       {!loading && !error && davlatlar.length === 0 && (
-        <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-3xl p-10 bg-slate-50/50 text-center">
+        <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-300 rounded-2xl p-12 bg-white text-center shadow-sm">
           <img
             src={HeroImage}
-            alt="Travel and tour illustration"
-            className="w-1/2 md:w-1/3 lg:w-1/4 h-auto object-contain mx-auto mb-4 opacity-90 drop-shadow-md"
+            alt="Travel illustration"
+            className="w-1/3 h-auto object-contain mx-auto mb-4 opacity-80"
           />
-          <p className="text-slate-600 font-medium text-lg">
-            Hozircha tog'lar yo'q. Birinchisini qo'shing!
+          <p className="text-[#22344F] font-bold text-lg">
+            Hozircha davlatlar yo'q. Birinchisini qo'shing!
           </p>
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {davlatlar.map((davlat) => (
           <DavlatCard
             key={davlat.id}
