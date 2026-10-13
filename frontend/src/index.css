@@ -36,3 +36,19 @@
   --font-heading: "Fraunces", Georgia, serif;
   --font-body: "Manrope", system-ui, sans-serif;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-white text-slate-900 transition-colors duration-200;
+  }
+
+  :root.dark body {
+    @apply bg-slate-950 text-slate-100;
+  }
+}
